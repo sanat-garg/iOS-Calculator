@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow: hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background:black">
+    <div class="main">
+        <input>
+        <table>
+            <tbody>
+                <tr>
+                    <td><button class="op">AC</button></td>
+                    <td><button class="op">+/-</button></td>
+                    <td><button class="op">%</button></td>
+                    <td><button class="o">&divide;</button></td>
+                </tr>
+                <tr>
+                    <td><button>7</button></td>
+                    <td><button>8</button></td>
+                    <td><button>9</button></td>
+                    <td><button class="o">&times;</button></td>
+                </tr>
+                <tr>
+                    <td><button>4</button></td>
+                    <td><button>5</button></td>
+                    <td><button>6</button></td>
+                    <td><button class="o">&minus;</button></td>
+                </tr>
+                <tr>
+                    <td><button>1</button></td>
+                    <td><button>2</button></td>
+                    <td><button>3</button></td>
+                    <td><button class="o">+</button></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button class="z">0</button></td>
+                    <td><button>.</button></td>
+                    <td><button class="o">=</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+<style>
+    @font-face {font-family: "Apple";src: url(../media/apple.otf);}
+    .main{
+        width: 245px;height:422px;
+        font-family: "Apple";
+        background: black;position: absolute;;
+        top:0;left:0;
+    }
+    table{
+        width: 100%;
+        position: absolute;
+        bottom: 20px;;
+        font-family: "Apple";
+        padding:0;margin:0;
+        padding:0 5%;
+    }
+    td{
+        width: 25%;
+        padding:1% 1.5%
+    }
+    button{
+        width: 100%;
+        background: rgb(53,51,54);
+        outline: none;
+        transition: 0.2s;
+        font-family: "Apple";
+        border:none;color:white;
+        height:45px;
+        line-height: 10px;
+        padding-bottom:3px;
+        font-size:5vh;
+        border-radius: 100%;
+    }
+    .op{
+        background: rgb(168,166,169);
+        color:black
+    }
+    .o{
+        background: rgb(248,160,20);
+        font-size: 5.9vh;
+    }
+    .z{
+        border-radius: 25px;
+        text-align: left;
+        padding-left: 18%;
+    }
+    @font-face {font-family: "AppleThin";src: url(../media/Apple_t.ttf);}
+    input{
+        width: 90%;
+        background: transparent;
+        color:white;outline: none;
+        border:none;font-size: 13vh;
+        font-family: "AppleThin";
+        text-align: right;
+        position: absolute;
+        caret-color: black;
+    }
+</style>
+
+<script>
+    window.onload = function(){
+        document.querySelector('input').style.bottom = document.querySelector('table').offsetHeight+20+"px";
+        var b =document.querySelectorAll('button');
+        for(let bu in b){
+            b[bu].onclick= function(){
+                add(b[bu].innerHTML,b[bu].className,b[bu])               
+            }
+        }
+    }
+    var eq = '';
+    function add(n,c,b){
+        var ip =  document.querySelector('input').value;
+        var l = eq[eq.length-1];
+        console.log(l)
+        if(!((c == 'op')||(c == 'o'))){
+            if((l=='+')||(l=='-')||(l=='/')||(l=='*')||(l=='%')){
+            eq += n;
+            document.querySelector('input').value=n;
+        } else{
+            eq += n;
+            document.querySelector('input').value+=n;
+        }
+        var t = document.querySelectorAll('button.o');
+        for(var bu = 0;bu<t.length;bu++){
+            t[bu].style.background = 'rgb(248,160,20)';
+            t[bu].style.color = 'white';
+        }
+        
+    }
+
+        else if(c == 'o'){
+    if((l=='+')||(l=='-')||(l=='/')||(l=='*')||(l=='%')){
+                eq = eq.slice(0, -1);
+                eq += n;
+                var t = document.querySelectorAll('button.o');
+        for(var bu = 0;bu<t.length;bu++){
+            console.log(t[bu].innerHTML)
+            t[bu].style.background = 'rgb(248,160,20)';
+            t[bu].style.color = 'white';
+        }        
+                b.style.color = 'rgb(248,160,20)';
+                b.style.background = 'white';
+            }
+
+            else{
+            if(n != '='){
+                if(n == '×'){eq += '*';}
+                if(n == '÷'){eq += '/';}
+                if(n == '+'){eq += '+';}
+                if(n == '−'){eq += '-';}
+                b.style.color = 'rgb(248,160,20)';
+                b.style.background = 'white';
+            }
+            else{
+                eq = eval(eq).toFixed(2);
+                eq = JSON.stringify(eq);
+                if(eq.includes('.00')){
+                    eq = eq.split('.')[0];
+                    eq += '"';
+                }
+                eq = eval(eq);
+                document.querySelector('input').value = eq;
+            }
+        }
+
+        }else if(c == 'op'){
+         if(n == 'AC'){document.querySelector('input').value = '';eq = '';} 
+    else if(n == '+/-'){document.querySelector('input').value = -(document.querySelector('input').value);
+    var num = (document.querySelector('input').value).length;
+    for(var y = 0;y<num-1;y++){
+        eq = eq.slice(0, -1);
+    }
+    eq += '(';
+eq += document.querySelector('input').value+")";
+console.log(eq)
+}
+    else if(n == '%'){
+        if     (eq.includes('+')){var newEq=eq.split('+');eq = eval((parseFloat(newEq[0])+(parseFloat(newEq[1])*0.01*parseFloat(newEq[0]))))}
+        else if(eq.includes('-')){var newEq=eq.split('-');eq = eval((parseFloat(newEq[0])-(parseFloat(newEq[1])*0.01*parseFloat(newEq[0]))))}
+        else if(eq.includes('*')){var newEq=eq.split('*');eq = eval((parseFloat(newEq[0])*(parseFloat(newEq[1])*0.01*parseFloat(newEq[0]))))}
+        else if(eq.includes('/')){var newEq=eq.split('/');eq = eval((parseFloat(newEq[0])/(parseFloat(newEq[1])*0.01*parseFloat(newEq[0]))))}
+    }
+        }
+
+
+    }
+</script>
