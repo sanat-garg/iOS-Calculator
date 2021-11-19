@@ -182,7 +182,7 @@ eq += document.querySelector('input').value+")";
 console.log(eq)
 }
     else if(n == '%'){
-        if     (eq.includes('+')){var newEq=eq.split('+');eq = eval((parseFloat(newEq[0])+(parseFloat(newEq[1])*0.01*parseFloat(newEq[0]))))}
+        if    (eq.includes('+')){var newEq=eq.split('+');eq = eval((parseFloat(newEq[0])+(parseFloat(newEq[1])*0.01*parseFloat(newEq[0]))))}
         else if(eq.includes('-')){var newEq=eq.split('-');eq = eval((parseFloat(newEq[0])-(parseFloat(newEq[1])*0.01*parseFloat(newEq[0]))))}
         else if(eq.includes('*')){var newEq=eq.split('*');eq = eval((parseFloat(newEq[0])*(parseFloat(newEq[1])*0.01*parseFloat(newEq[0]))))}
         else if(eq.includes('/')){var newEq=eq.split('/');eq = eval((parseFloat(newEq[0])/(parseFloat(newEq[1])*0.01*parseFloat(newEq[0]))))}
